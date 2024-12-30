@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Items</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #itemsContainer ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #itemsContainer li {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+    <input type="number" id="guessInput" placeholder="Enter your guess (1-10)" min="1" max="10">
+    <button id="checkGuess">Submit</button>
+    <p id="result" style="margin-top: 20px; font-weight: bold;"></p>
+
+
+
+  <input type="text" id="itemInput" placeholder="Enter an item"/>
+  <button id="addItem">Add Item</button>
+  <button id="displayItems">Display Items</button>
+  <div id="itemsContainer" style="margin-top: 20px;">
+  </div>
+  <script>
+    
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+
+    const guessInput = document.getElementById("guessInput");
+    const checkGuessButton = document.getElementById("checkGuess");
+    const resultDisplay = document.getElementById("result");
+
+    checkGuessButton.addEventListener("click", function() {
+      const userGuess = parseInt(guessInput.value, 10); 
+      if (!isNaN(userGuess) && userGuess >= 1 && userGuess <= 10) {
+        if (userGuess === randomNumber) {
+          resultDisplay.textContent = "Good Work!";
+        } else {
+          resultDisplay.textContent = "Not matched";
+        }
+      } else {
+        resultDisplay.textContent = "Please enter a valid number between 1 and 10.";
+      }});
+    
+    
+    const items = [];
+    const itemInput = document.getElementById("itemInput");
+    const addItemButton = document.getElementById("addItem");
+    const displayItemsButton = document.getElementById("displayItems");
+    const itemsContainer = document.getElementById("itemsContainer");
+
+    addItemButton.addEventListener("click", function() {
+      const newItem = itemInput.value.trim(); 
+      if (newItem) {
+        items.push(newItem); 
+        itemInput.value = ""; 
+      } else {
+        alert("Please enter an item."); 
+      }
+    });
+
+    displayItemsButton.addEventListener("click", function() {
+      const ul = itemsContainer.querySelector("ul") || document.createElement("ul");
+      ul.innerHTML = ""; 
+      items.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      if (!itemsContainer.contains(ul)) {
+        itemsContainer.appendChild(ul); 
+      }
+    });
+  </script>
+</body>
+</html>
+
+        
+
